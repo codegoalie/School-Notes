@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/courses/cs33001/svn/!svn/ver/1223/001/cmarshal/cs33001_student/Eval/prog3/part3
+END
+infixes.txt
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/courses/cs33001/svn/!svn/ver/1223/001/cmarshal/cs33001_student/Eval/prog3/part3/infixes.txt
+END
+main.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/courses/cs33001/svn/!svn/ver/1223/001/cmarshal/cs33001_student/Eval/prog3/part3/main.cpp
+END
+string.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/courses/cs33001/svn/!svn/ver/1223/001/cmarshal/cs33001_student/Eval/prog3/part3/string.cpp
+END
+node.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/courses/cs33001/svn/!svn/ver/1223/001/cmarshal/cs33001_student/Eval/prog3/part3/node.hpp
+END
+stack.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/courses/cs33001/svn/!svn/ver/1223/001/cmarshal/cs33001_student/Eval/prog3/part3/stack.hpp
+END
+string.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/courses/cs33001/svn/!svn/ver/1223/001/cmarshal/cs33001_student/Eval/prog3/part3/string.hpp
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/courses/cs33001/svn/!svn/ver/1223/001/cmarshal/cs33001_student/Eval/prog3/part3/makefile
+END

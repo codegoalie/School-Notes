@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/courses/cs33001/svn/!svn/ver/1062/001/cmarshal/cs33001_student/prog2
+END
+access_log.txt
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/courses/cs33001/svn/!svn/ver/534/001/cmarshal/cs33001_student/prog2/access_log.txt
+END
+access_log2.txt
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/courses/cs33001/svn/!svn/ver/534/001/cmarshal/cs33001_student/prog2/access_log2.txt
+END
+logentry.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/courses/cs33001/svn/!svn/ver/858/001/cmarshal/cs33001_student/prog2/logentry.cpp
+END
+main.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/courses/cs33001/svn/!svn/ver/858/001/cmarshal/cs33001_student/prog2/main.cpp
+END
+data.txt
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/courses/cs33001/svn/!svn/ver/858/001/cmarshal/cs33001_student/prog2/data.txt
+END
+string.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/courses/cs33001/svn/!svn/ver/1062/001/cmarshal/cs33001_student/prog2/string.cpp
+END
+logentry.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/courses/cs33001/svn/!svn/ver/857/001/cmarshal/cs33001_student/prog2/logentry.hpp
+END
+string.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/courses/cs33001/svn/!svn/ver/857/001/cmarshal/cs33001_student/prog2/string.hpp
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/courses/cs33001/svn/!svn/ver/857/001/cmarshal/cs33001_student/prog2/makefile
+END

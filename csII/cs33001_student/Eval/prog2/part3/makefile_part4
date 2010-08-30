@@ -1,0 +1,19 @@
+CC=g++
+CFLAGS=-c -Wall
+
+all: main
+
+main: string.o main.o logentry.o
+	$(CC) main.o string.o logentry.hpp -o main
+
+main.o: main.cpp string.hpp logentry.hpp
+	$(CC) $(CFLAGS) main.cpp string.hpp logentry.hpp
+
+logentry.o: logentry.hpp logentry.cpp
+	$(CC) $(CFLAGS) logentry.hpp logentry.cpp
+
+string.o: string.hpp string.cpp
+	$(CC) $(CFLAGS) string.hpp string.cpp
+
+clean:
+	rm -rf *o main *gch

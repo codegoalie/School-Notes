@@ -1,0 +1,5 @@
+Part1: 20
+Part2: 30
+Part3: 50
+
+Total: 100

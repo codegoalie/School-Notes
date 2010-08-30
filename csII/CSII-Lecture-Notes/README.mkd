@@ -1,0 +1,4 @@
+#CSII Lecture Notes
+
+After losing all my notes by breaking my Linux install,
+I'm backing everything up on GitHub.

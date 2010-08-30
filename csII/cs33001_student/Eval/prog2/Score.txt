@@ -1,0 +1,6 @@
+Part1: 10
+Part2: 15
+Part3: 25
+Part4: 45
+
+Total:

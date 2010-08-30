@@ -1,0 +1,37 @@
+#Trees
+
+Binary Tree
+  Each node only has a left or right (or none or both) children
+Binary Search Tree
+  Each node has value, left child less than node, right child has greater than node
+Expression Trees
+  Each inner node is operator, each leaf is operand
+
+Traversals
+
+In Order Traversal -- return nothing if null
+  InOrder(leftsubtree)
+  visit Node - Print, etc.
+  InOrder(rightsubtree)
+
+  Binary Search tree yields in order list
+  Expression yields infix
+
+PreOrder
+  Visit
+  PreOrder(left)
+  PreOrder(right)
+
+PostOrder
+  PostOrder(left)
+  PostOrder(right)
+  Visit
+
+Pre yields prefix
+
+in:   2 * 3 + 7 - 5 * 2
+pre:  - + * 2 3 7 * 5 2
+post: 2 3 * 7 + 5 2 * -
+
+
+Implemented with a node from a doubley linked lsit (data, *left, *right)
