@@ -1,1 +1,2 @@
-First Class
+DM + DML + DDL
+Data Model + Data Model Language + Data Description Language
