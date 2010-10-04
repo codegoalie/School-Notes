@@ -1,0 +1,7 @@
+h2. Direct Mapping
+
+p. Each block in cache directly maps to certain blocks in RAM
+Use the first few bits to determine map
+*. i.e. blocks 0,8,16 go into first block of cache
+*. :1,9,17 go into teh second block of cache
+
