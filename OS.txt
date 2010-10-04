@@ -1,0 +1,12 @@
+Proxess State
+New
+Ready
+Running
+Waiting
+Terminated
+
+Scheduler is a system process
+
+Process ID (PID)
+
+
