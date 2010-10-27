@@ -1,0 +1,33 @@
+Setting up NACHOS in Ubuntu Linux
+
+1) Download and Extract the nachos-java.tar.gz
+2) Install sun-java6-jdk package. (sudo apt-get install sun-java6-sdk)
+3) Add the nachos executable to your PATH, by adding the following lines to your ~/.profile file.
+
+        if [ -d "$HOME/nachos/bin" ] ; then
+          PATH="$HOME/nachos/bin:$PATH"
+        fi
+
+   Substitute your own path to the nachos bin/
+4) NACHOS is now working.
+5) To test, navigate in to the project1/ from within the nachos-java directory and run nachos.
+  
+Other Notes:
+  The different parts of nachos are spread into sub-directories within the main nachos folder. There is also a copy
+  of the necessary folders for project1 within a nachos/ folder in the project1/ folder. However, in project2/ there
+  is no such nachos folder. Therefore, when you compile project2 it uses the files in the main nachos folder. It seems
+  that these original main nachos files are not compiled correctly. I tried to 'make clean' and remake from the main
+  nachos folder, but there 'is nothing to be done for all.' So, I copied the folders from project1/nachos to the main
+  nachos folder and was able to successfully compile and run project2 (except for quitting it breaks with a
+  nachos.machine.AssertionFailureError).
+
+  To get rid of the Assertion Errors, I had to change the nachos.conf in the project2/ folder to be the same as the
+  project1/nachos.conf. Mainly the last three lines:
+    Kernel.shellProgram = halt.coff #sh.coff
+    Kernel.processClassName = nachos.userprog.UserProcess
+    Kernel.kernel = nachos.userprog.UserKernel
+  This got project1 and 2 working for me.
+
+
+    
+
