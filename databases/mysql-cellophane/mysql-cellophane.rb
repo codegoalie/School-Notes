@@ -68,7 +68,6 @@ class MySQLc
   # takes string parameter
   # returns saftely escaped string
   def esc(raw_string)
-    connect if @db.nil?
     @db.quote(raw_string.to_s)
   end
 
