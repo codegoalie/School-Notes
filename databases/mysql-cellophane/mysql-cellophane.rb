@@ -97,10 +97,23 @@ class MySQLc
   #
   # simply runs the query and returns the result
   def select(*vals)
-    print "#{vals}\n"
+    #print "#{vals}\n"
     set_attributes vals 
     execute
   end
+
+  # public method insert
+  #
+  # inserts a new row into the table 
+  # with the given values
+  def insert(inserts, *vals)
+    set_attributes vals
+
+    values = quoted_string_from inserts 
+
+
+    @query = "INSERT INTO #{esc(@table)} (#{esc(@field_list)}) VALUES " +
+      ""
 
   # public method quoted_string_from
   #
@@ -111,6 +124,22 @@ class MySQLc
   def quoted_string_from hash_or_array
     array =  hash_or_array.class == Hash ? hash_or_array.values : hash_or_array
     array.collect { |raw| "'#{esc(raw)}'"}.join(',')
+  end
+
+  # public method extract_values_from 
+  #
+  # takes a hash and returns a songle 
+  # quoted string of the values
+  def extract_values_from hash
+    quoted_string_from hash
+  end
+
+  # extract_fields_from
+  #
+  # takes a hash and returns a
+  # comma separated list of keys
+  def extract_fields_from hash
+    hash.keys.join(',')
   end
 
 
