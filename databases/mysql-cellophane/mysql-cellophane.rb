@@ -114,6 +114,7 @@ class MySQLc
 
     @query = "INSERT INTO #{esc(@table)} (#{esc(@field_list)}) VALUES " +
       ""
+  end
 
   # public method quoted_string_from
   #
