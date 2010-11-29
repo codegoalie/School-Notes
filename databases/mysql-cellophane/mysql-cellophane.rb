@@ -6,10 +6,6 @@ class MySQLc
   attr_accessor :table, :field_list, :id_field, :id, :extra_cond,
     :result, :query
 
-  def table
-    @table
-  end
-
   # public method initialize (constructor)
   #
   # initializes common instance vars
@@ -109,11 +105,12 @@ class MySQLc
   def insert(inserts, *vals)
     set_attributes vals
 
-    values = quoted_string_from inserts 
+    fields = extract_fields_from inserts 
+    values = extract_values_from inserts 
 
 
-    @query = "INSERT INTO #{esc(@table)} (#{esc(@field_list)}) VALUES " +
-      ""
+    @query = "INSERT INTO #{esc(@table)} (#{fields}) VALUES " +
+      "(#{values})"
   end
 
   # public method quoted_string_from

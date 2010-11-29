@@ -1,11 +1,13 @@
+require 'rubygems'
+require 'rspec'
 require 'mysql-cellophane.rb'
+require 'mysql.rb'
 
 describe MySQLc do
   before(:all) do
-      db = Mysql.new
-      db.real_connect('localhost', 'cello_tester', '', 'cello_test', nil, '/var/run/mysqld/mysqld.sock')
-      db.query("DROP test_one IF EXISTS");
-      db.query("CREATE TABLE test_one (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(22) NULL, age INT NULL;")
+      db = Mysql.real_connect('localhost', 'cello_tester', '', 'cello_test', nil, '/var/run/mysqld/mysqld.sock')
+      db.query("DROP TABLE IF EXISTS test_one");
+      db.query("CREATE TABLE test_one (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(22) NULL, age INT NULL);")
       db.query("INSERT INTO test_one (name, age) VALUES ('Chris', 26), ('Hayley', 24);")
   end
 
@@ -34,8 +36,10 @@ describe MySQLc do
 
     describe "Extraction Methods" do
       before(:all) do
-        @value_array = [1,2,3]
+        @value_array = [1,2,"do';else"]
+        @value_string = "'1','2','do\\\';else'"
         @field_array = [:one, :two, :three]
+        @field_string = "one,two,three"
         @value_array.size.times do |i|
           @generic_hash ||= {}
           @generic_hash[@field_array[i]] = @value_array[i] 
@@ -43,11 +47,11 @@ describe MySQLc do
       end
 
       it "should extract_values_from a hash" do
-        @db.extract_values_from(@generic_hash).should be @value_array
+        @db.extract_values_from(@generic_hash).should == @value_string
       end
 
       it "should extract_fields_from a hash" do
-        @db.extract_fields_from(@generic_hash).should be @field_array
+        @db.extract_fields_from(@generic_hash).should == @field_string
       end
     end
   end
@@ -96,7 +100,7 @@ describe MySQLc do
       result = @db.select
       @orig_rows = result.num_rows
       @insert_hash = { :name => 'Bobby', :age => '25' }
-      @new_id = @db.insert()
+      @new_id = @db.insert(@insert_hash)
       @result = @db.select
     end
 
