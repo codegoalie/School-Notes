@@ -1,14 +1,21 @@
-require 'rubygems'
-require 'rspec'
+#require 'rubygems'
+#require 'rspec'
 require 'mysql-cellophane.rb'
 require 'mysql.rb'
 
 describe MySQLc do
-  before(:all) do
+  describe "setup" do
+    before(:all) do
+      log = File.new('sql_log.log', 'a')
+      log.puts "\n\n\n\n\Starting new test iteration"
+      log.close
       db = Mysql.real_connect('localhost', 'cello_tester', '', 'cello_test', nil, '/var/run/mysqld/mysqld.sock')
       db.query("DROP TABLE IF EXISTS test_one");
       db.query("CREATE TABLE test_one (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(22) NULL, age INT NULL);")
       db.query("INSERT INTO test_one (name, age) VALUES ('Chris', 26), ('Hayley', 24);")
+    end
+    it "should setup" do
+    end
   end
 
   it "should assign the correct instance values by default" do 
@@ -100,34 +107,34 @@ describe MySQLc do
       result = @db.select
       @orig_rows = result.num_rows
       @insert_hash = { :name => 'Bobby', :age => '25' }
+      @return_hash = { 'name' => 'Bobby', 'age' => '25' }
       @new_id = @db.insert(@insert_hash)
+      @db.query = "SELECT * FROM test_one"
       @result = @db.select
     end
 
     it "should insert a new record" do
-      @result.num_rows.should be orig_rows+1
+      @result.num_rows.should be @orig_rows+1
     end
 
     it "should insert the correct values and return the newly inserted id" do
       @db.field_list  = 'name, age'
       @db.id_field    = 'id'
-      @db.id          = new_id
+      @db.id          = @new_id
       result = @db.select
       result.num_rows.should be 1
-      result.fetch_array.should be @insert_hash
+      result.fetch_hash.should eql @return_hash
     end
 
-    describe "inserted_id" do
-      it "should return the last inserted id" do
-        new_id = @db.inserted_id
-        @db.field_list = 'id'
-        @db.id_field = 1
-        @db.id = 1
-        @db.extra_cond = '1=1 LIMIT 1 ORDER BY id DESC'
-        result = @db.select
-        max_id = result.fetch_array[0]
-        new_id.should be max_id
-      end
+    it "should return the last inserted id" do
+      new_id = @db.inserted_id
+      @db.field_list = 'id'
+      @db.id_field = 1
+      @db.id = 1
+      @db.extra_cond = '1=1 ORDER BY id DESC LIMIT 1'
+      result = @db.select
+      max_id = result.fetch_row[0]
+      new_id.should eql max_id
     end
   end
 
@@ -141,18 +148,20 @@ describe MySQLc do
       @db.table = "test_one"
       @before_rows = @db.select.num_rows
       @db.id_field  = 'id'
-      @db.id        = 0
+      @db.id        = 1
       @db.update({ :name => "Christopher" })
+      @db.id_field  = 1
+      @db.id        = 1
       @after_rows = @db.select.num_rows
       @result = @db.select.fetch_hash
     end
 
     it "should not insert a new row" do
-      @before_rows.should be @after_rows
+      @before_rows.should eql @after_rows
     end
 
     it "should place the given value(s) into the database" do 
-      @result.fetch_array[:name].should be "Christopher"
+      @result['name'].should eql "Christopher"
     end
   end
 
