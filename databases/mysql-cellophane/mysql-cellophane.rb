@@ -76,10 +76,17 @@ class MySQLc
   # private method build_query
   #
   # constructs SELECT query from instance vars
-  def build_query
-    @query = "SELECT #{esc(@field_list)} " + "FROM #{esc(@table)} WHERE " +
-      "#{esc(@id_field)} = #{esc(@id)}"
-    @query << " AND #{@extra_cond}" unless @extra_cond.nil?
+  def build_query(update = false)
+    @query = ""
+    if @id_field != ""
+      @query += "WHERE #{esc @id_field} = '#{esc @id}'"
+    end
+
+    if @extra_cond != "" && !@extra_cond.nil?
+      @query += ((@query == "") ? " WHERE " : " AND ") + @extra_cond
+    end
+
+    @query = "SELECT #{field_list} FROM #{@table} #{@query}"
   end
 
 
@@ -156,6 +163,36 @@ class MySQLc
 
     @query = "UPDATE #{@table} SET #{sets.join ','} " + @query
     execute
+  end
+
+  # public methos delete
+  #
+  # deletes row(s) matching the instalce variables
+  # criteria
+  def delete(*vals)
+    set_attributes vals
+
+    @query = ""
+    if @id_field != ""
+      @query += "WHERE #{esc @id_field} = '#{esc @id}'"
+    end
+
+    if @extra_cond != "" && !@extra_cond.nil?
+      @query += ((@query == "") ? " WHERE " : " AND ") + @extra_cond
+    end
+
+    @query = "DELETE FROM #{@table} #{@query}"
+    execute
+  end
+
+  # public method count
+  #
+  # returns an integer of the totals returned by query
+  def count(*vals)
+    set_attributes vals
+
+    result = execute
+    result.num_rows
   end
 
   # public method quoted_string_from

@@ -176,15 +176,15 @@ describe MySQLc do
     end
 
     it "should remove a single row when conditions only match one row" do
+      before_count = @db.select.num_rows
       new_id = @db.insert({ :name => "Temp Guy", :age => 30 })
-      before_results= @db.select
       @db.id_field = 'id'
       @db.id = new_id
       @db.delete
       @db.id_field = 1
       @db.id = 1
-      after_results = @db.select
-      before_results.num_rows.should be(after_results.num_rows+1)
+      after_count = @db.select.num_rows
+      before_count.should be after_count
     end
 
     it "should remove multiple rows when conditions match multiple rows" do
@@ -213,13 +213,13 @@ describe MySQLc do
     it "should return 0 when no rows match the criteria" do
       @db.id_field = 'name'
       @db.id = "Roger"
-      @db.count.shoudl be 0
+      @db.count.should be 0
     end
 
     it "should return 1 when only one row matches condition" do
       @db.id_field = 'id'
       @db.id = 1
-      @db.count.shoudl be 1
+      @db.count.should be 1
     end
 
     it "should return an integer of the count of the matching rows" do
