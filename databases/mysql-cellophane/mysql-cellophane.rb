@@ -1,3 +1,12 @@
+# MySQL-cellophane is a very thin wrapper around the Mysql Ruby implementation
+# MySQc provides an API interface for those famaliar with SQL 
+# and wishes to have more fine grained control over their
+# queries, but don't want to write each query manually.
+#
+# Author:: Chris Marshall (mailto:chris@chrismar035.com)
+#
+# :title:MySQL-Cellophane
+
 class MySQLc
   #require 'rubygems'
   require 'mysql'
@@ -5,9 +14,9 @@ class MySQLc
   attr_accessor :table, :field_list, :id_field, :id, :extra_cond,
     :result, :query
 
-  # public method initialize (constructor)
+  # initializes common instance variables.
   #
-  # initializes common instance vars
+  # can setup connection, but does not create connection
   def initialize(options = {})
     log = File.new('sql_log.log', 'a')
     log.puts "Created New MySQLc instance"
@@ -30,10 +39,10 @@ class MySQLc
     @cache      = {}
   end
 
-  # private method connect
-  #
   # takes hash of connection ooptions, has default also
   # sets @db as Mysql instance
+  #
+  # as separate method for lazy connection
   def connect(options = {})
     @options.merge(options)
 
@@ -41,10 +50,10 @@ class MySQLc
                          @options[:port], @options[:socket], @options[:flag])
   end
 
-  # private method execute
-  #
   # builds query from parts if neccessary
+  #
   # returns cached result if exists
+  #
   # saves result in @result
   def execute
     log = File.new('sql_log.log', 'a')
@@ -73,9 +82,8 @@ class MySQLc
     #end
   end
 
-  # private method build_query
-  #
-  # constructs SELECT query from instance vars
+  # Creates the internal query string for 
+  # processing. Shouldn't ever NEED to be used externally.
   def build_query(update = false)
     @query = ""
     if @id_field != ""
@@ -90,8 +98,6 @@ class MySQLc
   end
 
 
-  # private method set_attributes
-  #
   # sets instance attributes from fucntion parameters
   # called by each public API methods
   def set_attributes(*vals)
@@ -109,19 +115,29 @@ class MySQLc
     end
   end
 
-  # public method select
+  # creates a select query and returns the reqult 
+  # as Mysql::Result
   #
-  # simply runs the query and returns the result
+  # takes an optional last parameter of a hash.
+  # This hash has symbol keys of any/all of the following:
+  # table, field_list, id_field, id, extra_cond
   def select(*vals)
     #print "#{vals}\n"
     set_attributes vals 
     execute
   end
 
-  # public method insert
-  #
   # inserts a new row into the table 
-  # with the given values
+  # from the given hash
+  #
+  #  { :column_one_field => 'column_one_value', 
+  #  :column_two_field => 'column_two_value' }
+  #
+  # return the newly insertted row's ID
+  #
+  # takes an optional last parameter of a hash.
+  # This hash has symbol keys of any/all of the following:
+  # table, field_list, id_field, id, extra_cond
   def insert(inserts, *vals)
     set_attributes vals
 
@@ -135,18 +151,22 @@ class MySQLc
     inserted_id
   end
 
-  # public method inserted_id
-  #
-  # gets the last inserted ID and returns it
+  # returns the last inserted ID
   def inserted_id
     @query = "SELECT LAST_INSERT_ID();"
     execute
     @result.fetch_row[0]
   end
 
-  # public method update
+  # takes a given hash: 
   #
-  # takes a given hash and updates the correct row
+  #  { :column_one_field => 'column_one_value', :column_two_field => 'column_two_value' }
+  #
+  # and updates the correct row
+  #
+  # takes an optional last parameter of a hash.
+  # This hash has symbol keys of any/all of the following:
+  # table, field_list, id_field, id, extra_cond
   def update(updates, *vals)
     set_attributes vals
     
@@ -165,10 +185,12 @@ class MySQLc
     execute
   end
 
-  # public methos delete
-  #
-  # deletes row(s) matching the instalce variables
+  # deletes row(s) matching the instalce variables'
   # criteria
+  #
+  # takes an optional last parameter of a hash.
+  # This hash has symbol keys of any/all of the following:
+  # table, field_list, id_field, id, extra_cond
   def delete(*vals)
     set_attributes vals
 
@@ -185,9 +207,11 @@ class MySQLc
     execute
   end
 
-  # public method count
-  #
   # returns an integer of the totals returned by query
+  #
+  # takes an optional last parameter of a hash.
+  # This hash has symbol keys of any/all of the following:
+  # table, field_list, id_field, id, extra_cond
   def count(*vals)
     set_attributes vals
 
@@ -195,37 +219,37 @@ class MySQLc
     result.num_rows
   end
 
-  # public method quoted_string_from
-  #
   # library function to convert values
   # in a hash (or plain array) into an
   # escaped single quoted comma
   # delimited string
+  #
+  # i.e.
+  #   { :key => 'val1', :key2 => "val'2" }  #=> "'val1','val\'2'"
+  #   [ 'val1', "val'2" ]                   #=> "'val1', 'val\'2'"
   def quoted_string_from hash_or_array
     array =  hash_or_array.class == Hash ? hash_or_array.values : hash_or_array
     array.collect { |raw| "'#{esc(raw)}'"}.join(',')
   end
 
-  # public method extract_values_from 
-  #
   # takes a hash and returns a songle 
   # quoted string of the values
+  #   
+  #   { :key => 'val1', :key2 => "val'2" }  #=> "'val1','val\'2'"
   def extract_values_from hash
     quoted_string_from hash
   end
 
-  # extract_fields_from
-  #
   # takes a hash and returns a
   # comma separated list of keys
+  #
+  #   { :key1 => 'val1', :key2 => 'key2' } #=> "key1, key2"
   def extract_fields_from hash
     hash.keys.join(',')
   end
 
 
-  # public method esc
-  #
-  # takes string parameter
+  # takes string parameter and 
   # returns saftely escaped string
   def esc(raw_string)
     connect if @db.nil? #connect to the database if needs be
@@ -233,7 +257,5 @@ class MySQLc
     @db.quote(raw_string.to_s)
   end
 
-
-  #private :connect, :set_attributes
 end
 
