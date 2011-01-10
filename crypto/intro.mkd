@@ -1,0 +1,20 @@
+Introduction
+------------------------
+
+Alice <---------\/-----------------> Bob
+                Eve
+
+Cryptosystem
+-----
+
+* Plaintext Set
+* Ciphertext Set
+* Encryption Functions
+* Set of Keys
+
+Subject Plaintext document to "encryption" to produce a ciphertext document
+Then, a reverse "encryption" can be applied to ciphertext to produce plaintext
+
+The "encryption" and "decryption" functions use a Key.
+The functions are well known. THe keys are not.
+                
