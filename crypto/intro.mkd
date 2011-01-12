@@ -17,4 +17,8 @@ Then, a reverse "encryption" can be applied to ciphertext to produce plaintext
 
 The "encryption" and "decryption" functions use a Key.
 The functions are well known. THe keys are not.
-                
+
+Alphabet is a finite set. Elements of an alphabet are symbols.
+String is a ordered sequence of symbols.
+
+Vigenre Cipher
