@@ -1,0 +1,77 @@
+Number Theory
+=======
+
+There are many good nooks and crannies in number theory on which to base a cryptosystem.
+
+Let a,b be ints, a/b if form some m  such that am = b
+
+If there is no such m, then a does not divide b.
+
+Thm:
+Let a,b,c be ints, assume a/b and b/c then a/c.
+
+
+Thm:
+Let a,b,c be ints, assume a|b and a|c, and let x,y be ints.
+Then a|bx+cy
+
+Every integer can be writen uniquely as a product of primes. aka Prime Factorization
+
+Divisibility has the following rules:
+
+i)    For all m are pos ints, m|m
+ii)   For all m,n,r are pos ints, m|n and n|r then m|r
+iii)  For all m,n are pos ints, if m|n and n|m then m=n
+
+GCDa & LCMs
+===
+
+Definition:
+g will be called the GCD of a and b if 
+  i) 
+    g|a and g|b
+ ii) 
+    if h|a and h|b then h <= g
+
+ii`) 
+    if g > 0 and if h|a and h|b then h|g
+
+
+
+Definition:
+Two integers m,n are RELATIVELY PRIME their gcd(m,n)= 1
+
+Definition:
+Let m,n be integers, k will be called the lcm of m and n (k = lcm(m,n)), if m|k and n|k and k is the 
+smallest possible opsitive integer satisfying m|k and n|k.
+
+Exercise:
+For any positive integers m,n: gcd(m,n) \* lcm(m,n) = m\*n
+
+The division "algorithm"
+=====
+
+Let a be any integer, d be any positive integer. There exist exist unique integers a, r such that 
+  i) a = q\*d+r
+  2) 0 <= r < d 
+
+Let x be a real number, we shall call floor(x) the largest integer smaller than x; 
+We shall calle ceil(x) the smallest integer larger than x.
+
+If x is an integer, then floor(x) = ceil(x) = x.
+
+int gcd(m,n)
+{
+  if(m < 0) m = -1 * m;
+  if(n < 0) n = -1 * n;
+  while(n != 0)
+  {
+    k = m % n;
+    m = n;
+    n = k;
+  }
+  return m;
+
+}
+
+Given two integers m,n ther exist two integers a,b such that g = am + bn
