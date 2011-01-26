@@ -75,3 +75,5 @@ int gcd(m,n)
 }
 
 Given two integers m,n ther exist two integers a,b such that g = am + bn
+
+
