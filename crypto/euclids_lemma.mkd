@@ -1,0 +1,84 @@
+# Euclid's Lemma:
+
+> Let p be a prime. Let a,b be two numbers and assume
+  p|a*b. Then p|a and p|b.
+
+> Let p divide a_sub1 *  a_sub2 * ... * a_subk. Then p divides one of the a_sub_n.
+
+
+# Fundamental Theorem of Arithmatic
+
+> Every number n can be written in only one way as a product of powers of primes.
+
+## Proof:
+
+Prove that every number can be written as a product of powers of primes.
+
+#### Proof by Contradiction
+
+Assume there is at least one number that cannot be written as a power of primes.
+Let s be the set of all numbers which cannot baea written as a product of primes.
+By hypothesis, a ia not an empty set, therefore by the WOP theory, s has the smallest
+element e. e is not prime. Therefore, e is composite. e = f x g. f is less than e and
+g is less than e. Therefore f and g are not elements of s. Therefore, f and g can be
+written as a product of primes which means e can be written as a product of primes.
+
+# Congruent Mod
+
+Let m be a positive integer. We say that two integers a,b are congruent mod if and
+only if
+
+    a is congruent to b(mod m) if m|(a-b)
+
+Let a be an integer and m be a positive integer,
+
+    rem(a,m) is the number r such that 0 <= r < m such that m|(a-r)
+
+Basically the remainder of a and m.
+
+### Lemma:
+
+a is congruent to b if and only if 
+
+>   
+    rem(a,m) = rem(b,m)
+
+## Theorem:
+
+> Let a,b,c be integers, m is a positive integer then:  
+
+      a is congruent to a(mod m) for all a  
+
+      if a is congruent to b(mod m) and b is congruent to c(mod m) then a is congruent to c(mod m)  
+
+      if a is congruent to b(mod m) then b is congruent to a(mod m)
+
+## Definition:
+
+Let m be a positive integer. Define the congruence class of a mod m to be the set: 
+
+    {x:x=a+km; k is an integer}
+
+## Theorem:
+
+Let me be a positive integer, a and be are integers.  
+The following statements are equivalent:
+
+1. congruence class of a mod m intersected with the congruence class of b mod m is not the empty set
+2. a is congruent to b mod m
+3. the congrience class of a mod m is equal to the congruence class of b mod m
+
+### Proof:
+
+1 implies 2. Let x be an element in the set of the intersection of the congruence class of a mod m and 
+b mod m.  
+
+    x = a+km = b+lm
+
+therefore  
+
+    a-b = lm-km  
+    m(1-k) = a-b  
+    m|(a-m) => a is congruent to b(mod m)
+
+
