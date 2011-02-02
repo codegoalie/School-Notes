@@ -13,13 +13,16 @@ using namespace std;
 
 int main(void)
 {
-  string plain_text = "ITSASECRET";
-  string key = "LEMON";
+  string plain_text, key;
 
+  cout << "Please enter a text to encrypt:" << endl;
+  cin >> plain_text;
+  cout << "Please enter a key:" << endl;
+  cin >> key;
   string cypher = vigenere::encrypt(plain_text, key);
   string decrypt= vigenere::decrypt(cypher, key);
 
-  cout << plain_text << " >> " << cypher << " >> " << decrypt << endl;
+  cout << "Your cyphertext: " << cypher << "\nYour plaintext:  " << decrypt << endl;
 
   return 1;
 }

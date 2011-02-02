@@ -18,13 +18,6 @@ string vigenere::encrypt(string plain_text, string key)
   string cypher = "";
   for(int i =0; i < (int)plain_text.size(); ++i)
   {
-    cout << i << " " << plain_text[i] << " " << 
-      char_to_int(plain_text[i]) << " : " << i % key.size() <<
-      " " << char_to_int(key[i % key.size()]) << " : " << 
-      char_to_int(plain_text[i]) + char_to_int(key[i % key.size()])
-      << " " << (char_to_int(plain_text[i]) + char_to_int(key[i % key.size()]))
-      % alphabet.size() << endl;
-
     cypher += alphabet[(char_to_int(plain_text[i]) + 
           char_to_int(key[i % key.size()]))% alphabet.size()];
   }
@@ -36,8 +29,11 @@ string vigenere::decrypt(string cypher, string key)
   string plain_text = "";
   for(int i =0; i < (int)cypher.size(); ++i)
   {
-    plain_text += alphabet[(char_to_int(cypher[i]) - 
-        char_to_int(key[i % key.size()])) % alphabet.size()];
+    int index = char_to_int(cypher[i]) - char_to_int(key[i % key.size()]);
+    if(index < 0)
+      index += alphabet.size();
+
+    plain_text += alphabet[index % alphabet.size()];
   }
   return plain_text;
 }
