@@ -82,3 +82,28 @@ therefore
     m|(a-m) => a is congruent to b(mod m)
 
 
+
+----
+
+## Arithmatic Mod M
+
+Let m, a, b, a\`, b\` be integers, with m \> 0  
+Assume 
+
+    a congruent to a\` mod m   
+    and b is congruent to b\` mod m
+
+then 
+
+     a + b is conguent to a\` + b\`  mod m
+     -a is congruent to -a\`         mod m
+     a * b si congruent to a\` * b\` mod m
+     a - b si congruent to a\` - b\` mod m
+     a - a\` = b - b\`
+
+also, for all positive integers k,
+
+    a to the k = a\` to the k mod m
+
+
+
