@@ -1,0 +1,35 @@
+P is plaintext symbols
+C is cyphertext symbols
+P\*  = {set of strings over P}
+script_P is a subset of P\*
+cursive_C is a subset of C\*o
+
+e_sub_k maps script_P into cursive_C
+d_sub_k maps cursive_C into script_P
+(k is a key in the keyspace)
+
+symmetric is keys are same
+different, and not easy to derive one from another, keys == asymmetric (public)
+
+### Examples:
+
+    o('a') = 0
+    o('b') = 1
+    ...
+    o('z') = 25
+
+***Affine Cipher***  
+
+e_sub_(a,b) of l - o_inverse(a \* o(l) + b mod 26)
+
+Since a and 26 are relatively prime, there exits c, k such that:  
+
+    ac - 26k = 1
+
+then
+
+    c(ax + b) - bc = acx = x-26kx == x mod 26
+
+So,
+
+d_sub(a,b) of l = o_inverse(c \* o(l) - bc) mod 26 where c = a_inverse mod 26
