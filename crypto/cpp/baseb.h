@@ -11,8 +11,10 @@
 class BaseB
 {
   public:
-    BaseB(std::vector<int> digits, int base) :_base(base), _digits(digits) {};
+    BaseB(std::vector<int> digits, int base) :_digits(digits), _base(base) {};
     BaseB operator+(BaseB);
+
+    void print();
 
   private:
     std::vector<int> _digits;

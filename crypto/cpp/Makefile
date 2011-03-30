@@ -6,7 +6,7 @@
 
 
 CC=g++
-CFLAGE=-c -Wall
+CFLAGS=-c -Wall
 
 all: base_b
 
