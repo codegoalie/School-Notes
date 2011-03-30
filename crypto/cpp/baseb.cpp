@@ -15,30 +15,33 @@ BaseB BaseB::operator+(BaseB rhs)
     return *this;
   }
 
-  std::vector<int> result;
+  std::vector<int> result, long_adder, short_adder;
+
+  if(_digits.size() > rhs._digits.size())
+  {
+    long_adder = _digits;
+    short_adder = rhs._digits;
+  }
+  else
+  {
+    long_adder = rhs._digits;
+    short_adder = _digits;
+  }
+
+  int short_iterator = short_adder.size() - 1;
 
   int carry = 0;
 
-  int length = 0;
-  if(_digits.size() > rhs._digits.size())
-    length = _digits.size();
-  else
-    length = rhs._digits.size();
-
-  for(int i = 0; i < length; ++i)
+  for(int i = long_adder.size()-1; i >= 0; --i)
   {
-    //std::cout << i << " finding left\n";
-    int left_digit = 0;
-    if(i < (int)_digits.size())
-      left_digit = _digits[i];
 
-    //std::cout << i << " finding right\n";
-    int right_digit = 0;
-    if(i < (int)rhs._digits.size())
-      right_digit = rhs._digits[i];
+    int short_digit = 0;
+    if(short_iterator >= 0)
+      short_digit = short_adder[short_iterator];
+    else
+      std::cout << i << ", short_digit to 0\n";
 
-    //std::cout << i << " found both\n";
-    int k = (left_digit + right_digit) + carry;
+    int k = (long_adder[i] + short_digit) + carry;
     if(k >= _base)
     {
       k -= _base;
@@ -47,21 +50,16 @@ BaseB BaseB::operator+(BaseB rhs)
     else
       carry = 0;
 
-    //std::cout << "adding to result...\n";
-    result.push_back(k);
-    //std::cout << "done\n";
+    result.insert(result.begin(), k);
+    --short_iterator;
   }
   if(carry == 1)
   {
-    std::cout << "Overflow";
-    return *this;
+    result.insert(result.begin(), 1);
   }
-  else
-  {
-    BaseB* returner = new BaseB(result, _base);
-    //std::cout << "returning result\n";
-    return *returner;
-  }
+ 
+  BaseB returner(result,_base);
+  return returner;
 }
 
 void BaseB::print()
