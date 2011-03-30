@@ -13,10 +13,13 @@ class BaseB
   public:
     BaseB(std::vector<int> digits, int base) :_digits(digits), _base(base) {};
     BaseB operator+(BaseB);
+    BaseB operator-(BaseB);
 
     void print();
+    void convert_to_complement();
 
   private:
+
     std::vector<int> _digits;
     int _base;
 };

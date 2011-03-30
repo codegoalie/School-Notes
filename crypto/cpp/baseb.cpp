@@ -38,8 +38,6 @@ BaseB BaseB::operator+(BaseB rhs)
     int short_digit = 0;
     if(short_iterator >= 0)
       short_digit = short_adder[short_iterator];
-    else
-      std::cout << i << ", short_digit to 0\n";
 
     int k = (long_adder[i] + short_digit) + carry;
     if(k >= _base)
@@ -62,6 +60,14 @@ BaseB BaseB::operator+(BaseB rhs)
   return returner;
 }
 
+BaseB BaseB::operator-(BaseB rhs)
+{
+  rhs.convert_to_complement();
+  BaseB result = *this + rhs;
+  result._digits.erase(result._digits.begin());
+  return result;
+}
+
 void BaseB::print()
 {
   std::cout << "{";
@@ -71,4 +77,15 @@ void BaseB::print()
     std::cout << _digits[i];
   }
   std::cout << "} " << _base;
+}
+
+void BaseB::convert_to_complement()
+{
+  for(int i=0; i < (int)_digits.size(); ++i)
+  {
+    _digits[i] = _base - _digits[i] - 1;
+  }
+
+  
+  *this = *this + BaseB(std::vector<int>(1,1), _base);
 }
