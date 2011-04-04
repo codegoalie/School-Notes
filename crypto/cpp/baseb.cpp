@@ -3,6 +3,7 @@
 // 3/24/2011
 
 #include <vector>
+#include <cmath>
 #include <iostream>
 
 #include "baseb.h"
@@ -62,7 +63,11 @@ BaseB BaseB::operator+(BaseB rhs)
 
 BaseB BaseB::operator-(BaseB rhs)
 {
-  rhs.convert_to_complement();
+  int new_size = (_digits.size() > rhs._digits.size()) 
+    ? _digits.size()
+    : rhs._digits.size();
+
+  rhs.convert_to_complement(new_size);
   BaseB result = *this + rhs;
   result._digits.erase(result._digits.begin());
   return result;
@@ -81,11 +86,37 @@ void BaseB::print()
 
 void BaseB::convert_to_complement()
 {
-  for(int i=0; i < (int)_digits.size(); ++i)
+  convert_to_complement((int)_digits.size());
+}
+
+void BaseB::convert_to_complement(int digits)
+{
+  std::vector<int> new_digits;
+  int ii=0;
+  for(int i=0; i < digits; ++i)
   {
-    _digits[i] = _base - _digits[i] - 1;
+    if(i < (digits - (int)_digits.size()))
+    {
+      new_digits.push_back(_base - 1);
+    }
+    else
+    {
+      new_digits.push_back(_base - _digits[ii] - 1);
+      ++ii;
+    }
   }
 
+  _digits = new_digits;
   
   *this = *this + BaseB(std::vector<int>(1,1), _base);
+}
+
+int BaseB::base_ten()
+{
+  int result=0;
+  for(int i = 0 ; i < (int)_digits.size(); ++i)
+  {
+    result += _digits[i] * pow(_base, (int)_digits.size() - i);
+  }
+  return result;
 }

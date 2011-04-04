@@ -17,6 +17,9 @@ class BaseB
 
     void print();
     void convert_to_complement();
+    void convert_to_complement(int);
+
+    int base_ten();
 
   private:
 
