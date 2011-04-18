@@ -34,3 +34,12 @@ class Crypto
 
 
 end
+
+class SymetricCrypters
+  def initialize private_key
+    @private_key = private_key
+  end
+
+  def genrate_public_key g
+    g^@private_key
+  end
