@@ -1,0 +1,53 @@
+1. a) To find multiplicative inverses mod m, we used either a multiplication table or 
+via the extended euclidean algorithm. Multiplications tables are created by multiplying the 
+row number by the column number mod m. To find a multiplicative inverse, search the table for
+ones. The extended euclidean algorithm can, given two integers, a and b, find three integer
+such that d = ax + by, where x is the multiplicative inverse of a.
+b) The gcd(a,b) must equal d mod m. We can then use the extended euclidean algorithm to find x.
+
+2. The Caesar cipher and the scytale are examples of Affine cyphers. By definition, any simple 
+function applied to integer representation of letters mod 26 is an example of affine encryptopn.
+
+d1 d2 d3 d4
+ 9  9  3  2
+
+3. p = 3557, q = 7103. n = 25265371. Phi(n) = 25254712. d = 41. e = 12.
+a) For e = 12, K = 4.
+   For d = 41, K = 6.
+
+b) 932 ^ 41 = 101001
+k   d[k]         a         s (mod 25265371)
+0                1       932
+1      1       932    868624
+2      0       932   7879203 
+3      0       932  22947719
+4      1  12769310  21757696
+5      0  12769310   3005303
+6      1  23108288   6562100
+
+Answer: 23108288 (mod 25265371)
+
+4. a) Yes. 111^6960 (mod 6961) = 1.
+b) i) No. If I could, the entire key exchange would be pointless, because anyone who had your
+public key could determine your private key.
+ii) 111 ^ 932 (mod 6961) = 120
+iii) 993 ^ 932 (mod 6961) = 3068
+
+5. a) 8^2 =? 6^3 + 22(6) + 15
+     64 (mod 23) =? 216 + 132 + 15 (mod 23)
+        18 =? 18
+          Yes
+
+   b) 9^2 =?  9^3 + 22(9) + 15
+      12 =? 22
+        No
+
+   c) 11^2 =? 12^3 + 22(12) + 15
+        6  =?  6
+          Yes
+
+   d) m = (6 - 4) / (8 - 3) = 2/5 
+      x = (2/5)^2 - 6 - 4 = -246/25
+      y = (2/5)(6 + 246/25) - 3 = 767/25
+
+      (-246/25, 767/25), or (-9.84, 30.68)

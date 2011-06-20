@@ -44,9 +44,16 @@ int gcd(int a, int b)
 
 int main()
 {
-  vector<int> a;
-  a = ExtEucAlg(1001,54);
-  cout << "d = " << a[0] << ", a = " << a[1] << ", b = " << a[2] << endl;
+
+  //int a=1195, b=3024;
+  int a=37, b=41;
+  cout << gcd(a,b) << endl;
+
+  vector<int> egcd;
+  egcd = ExtEucAlg(a,b);
+  cout << "d = " << egcd[0] << ", a = " << egcd[1] << ", b = " << egcd[2] << endl;
+
+  cout << endl << (44^a)%(a*b) << endl;
 
   return 0;
 }
