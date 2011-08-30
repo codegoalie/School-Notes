@@ -1,0 +1,32 @@
+ap1
+protocol1
+protocol3
+protocol5
+
+ap2
+protocol1
+protocol2
+protocol3
+
+client1
+protocol2
+protocol5
+5
+ap1 4
+ap2 6
+
+client2
+protocol1
+protocol2
+protocol3
+protocol4
+protocol5
+0
+ap1 8
+ap2 8
+
+client3
+protocol2
+3
+ap1 3
+ap2 4
