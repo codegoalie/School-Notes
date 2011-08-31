@@ -32,37 +32,37 @@ int main() {
   std::vector<AccessPoint*> access_points;
   std::vector<Client*> clients;
 
-  input.open("input.txt");
-  if(input.is_open())
-  {
-    while(input.good())
+  //input.open("input.txt");
+  //if(input.is_open())
+  //{
+    while(std::cin)
     {
-      getline(input, line);
+      getline(std::cin, line);
       if(line[0] == 'a') // found access point
       {
         AccessPoint *ap = new AccessPoint(line);
-        getline(input, line);
+        getline(std::cin, line);
         while(line != "" && input.good())
         {
           ap->protocols.push_back(line);
-          getline(input, line);
+          getline(std::cin, line);
         }
         access_points.push_back(ap);
       }
       else if(line[0] == 'c')
       {
         Client *c = new Client(line);
-        getline(input, line);
+        getline(std::cin, line);
         while(line != "" && input.good())
         {
           while(line[0] == 'p' && input.good())
           {
             c->protocols.push_back(line);
-            getline(input, line);
+            getline(std::cin, line);
           }
           std::stringstream ss(line);
           ss >> c->min_strength;
-          getline(input, line);
+          getline(std::cin, line);
           while(line[0] == 'a' && input.good())
           {
             size_t space;
@@ -72,7 +72,7 @@ int main() {
             std::stringstream ss(line.substr(space, 999));
             ss >> strength;
             c->access_points.push_back(new ClientAccessPoint(name, strength));
-            getline(input, line);
+            getline(std::cin, line);
           }
         }
         clients.push_back(c);
@@ -124,8 +124,8 @@ int main() {
       }
       found = false;
     }
-  }
-  else std::cout << "Unable to open file.";
+  //}
+  //else std::cout << "Unable to open file.";
 
   return 0;
 }
