@@ -1,3 +1,4 @@
+require 'ncurses'
 
 class Field 
   def initialize(field_size, randomize=true)
@@ -18,17 +19,22 @@ class Field
     end
   end
 
-  def print_data
+  def print_data(start_row, start_col)
+    current_row = start_row
+    current_col = start_col
     (0..@field_size-1).each do |row|
       (0..@field_size-1).each do |col|
-        if @data[row][col] == 0
-          print ". "
+        char = if @data[row][col] == 0
+          ". "
         else
-          print "* "
+          "* "
         end
+        Ncurses.mvaddstr(current_row, current_col*2,char)
+        current_col+=1
         #print "#{@data[row][col]} "
       end
-      print "\n"
+      current_row += 1
+      current_col = start_col
     end
   end
 
@@ -78,32 +84,35 @@ end
 
 ####################################################################
 
-puts "\nWelcome to the Game of Life!\n\n"
-puts "Pass a second parameter to start with random data" if ARGV[1].nil?
+Ncurses.initscr
+Ncurses.clear
+Ncurses.mvaddstr(0,0, "Welcome to the Game of Life!")
+Ncurses.mvaddstr(1,0, "Pass a second parameter to start with random data") if ARGV[1].nil?
 if ARGV.size > 0
   field_size = ARGV[0].to_i
-  puts "Playing on a #{field_size} x #{field_size} field"
+  Ncurses.mvaddstr(2,0, "Playing on a #{field_size} x #{field_size} field")
 else
   field_size = 5
-  puts "Defaulting to a #{field_size} x #{field_size} field. Run with an integer param to " +
-    "set a custom size."
+  Ncurses.mvaddstr(2,0, "Defaulting to a #{field_size} x #{field_size} field. Run with an integer param to " +
+    "set a custom size.")
 end
 
 field = Field.new(field_size, ARGV[1])
-puts "Initial State:"
-field.print_data
-puts "Starting in 3 seconds..."
+Ncurses.mvaddstr(3,0, "Initial State:")
+Ncurses.mvaddstr(4,0, "Starting in 3 seconds...")
+field.print_data(5,0)
+Ncurses.refresh
 sleep 3
 
-ctrl_char = ''
 generation = 1
-#until ctrl_char =~ /q/i
+
 until generation == 50
   field.iterate
-  puts "Generation #{generation}:"
-  field.print_data
-  #puts "Press enter to continue; q to quit."
-  #ctrl_char = gets.chomp
+  Ncurses.clear
+  Ncurses.mvaddstr(0,0,  "Generation #{generation}:")
+  field.print_data(1,0)
+  Ncurses.refresh
   generation += 1
   sleep 1
 end
+Ncurses.endwin
