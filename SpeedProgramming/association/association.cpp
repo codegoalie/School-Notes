@@ -1,5 +1,6 @@
 
 #include <iostream>
+//#include <isstream>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -27,6 +28,7 @@ class Client {
 };
 
 int main() {
+  fprintf(stderr, "program started");
   std::ifstream input;
   std::string line;
   std::vector<AccessPoint*> access_points;
@@ -37,6 +39,7 @@ int main() {
   //{
     while(std::cin)
     {
+      fprintf(stderr, "Start of loop");
       getline(std::cin, line);
       if(line[0] == 'a') // found access point
       {
@@ -78,7 +81,8 @@ int main() {
         clients.push_back(c);
       }
     }
-    input.close();
+    //input.close();
+    fprintf(stderr, "input loop ended");
 
     std::vector<AccessPoint*>::iterator ap_it;
     std::vector<ClientAccessPoint*>::iterator cap_it;
