@@ -6,87 +6,85 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 class AccessPoint {
   public:
-    AccessPoint(std::string n):name(n) {};
-    std::string name;
-    std::vector<std::string> protocols;
+    AccessPoint(string n):name(n) {};
+    string name;
+    vector<string> protocols;
 };
 class ClientAccessPoint {
   public:
-    ClientAccessPoint(std::string n, int s):name(n),strength(s) {};
-    std::string name;
+    ClientAccessPoint(string n, int s):name(n),strength(s) {};
+    string name;
     int strength;
 };
 class Client {
   public:
-    Client(std::string n):name(n) {};
-    std::string name;
+    Client(string n):name(n) {};
+    string name;
     int min_strength;
-    std::vector<std::string> protocols;
-    std::vector<ClientAccessPoint*> access_points;
+    vector<string> protocols;
+    vector<ClientAccessPoint*> access_points;
 };
 
 int main() {
-  fprintf(stderr, "program started");
-  std::ifstream input;
-  std::string line;
-  std::vector<AccessPoint*> access_points;
-  std::vector<Client*> clients;
+  string input;
+  string line;
+  vector<AccessPoint*> access_points;
+  vector<Client*> clients;
 
   //input.open("input.txt");
   //if(input.is_open())
   //{
-    while(std::cin)
+    while(!cin.eof())
     {
-      fprintf(stderr, "Start of loop");
-      getline(std::cin, line);
+      getline(cin, line);
       if(line[0] == 'a') // found access point
       {
         AccessPoint *ap = new AccessPoint(line);
-        getline(std::cin, line);
-        while(line != "" && input.good())
+        getline(cin, line);
+        while(line != "")
         {
           ap->protocols.push_back(line);
-          getline(std::cin, line);
+          getline(cin, line);
         }
         access_points.push_back(ap);
       }
       else if(line[0] == 'c')
       {
         Client *c = new Client(line);
-        getline(std::cin, line);
-        while(line != "" && input.good())
+        getline(cin, line);
+        while(line != "")
         {
-          while(line[0] == 'p' && input.good())
+          while(line[0] == 'p')
           {
             c->protocols.push_back(line);
-            getline(std::cin, line);
+            getline(cin, line);
           }
-          std::stringstream ss(line);
+          stringstream ss(line);
           ss >> c->min_strength;
-          getline(std::cin, line);
-          while(line[0] == 'a' && input.good())
+          getline(cin, line);
+          while(line[0] == 'a')
           {
             size_t space;
             space = line.find_first_of(" ", 0);
-            std::string name = line.substr(0,space);
+            string name = line.substr(0,space);
             int strength;
-            std::stringstream ss(line.substr(space, 999));
+            stringstream ss(line.substr(space, 999));
             ss >> strength;
             c->access_points.push_back(new ClientAccessPoint(name, strength));
-            getline(std::cin, line);
+            getline(cin, line);
           }
         }
         clients.push_back(c);
       }
     }
-    //input.close();
-    fprintf(stderr, "input loop ended");
 
-    std::vector<AccessPoint*>::iterator ap_it;
-    std::vector<ClientAccessPoint*>::iterator cap_it;
-    std::vector<Client*>::iterator c_it;
+    vector<AccessPoint*>::iterator ap_it;
+    vector<ClientAccessPoint*>::iterator cap_it;
+    vector<Client*>::iterator c_it;
 
     //for(cap_it=(*c_it)->access_points.begin(); cap_it < (*c_it)->access_points.end(); cap_it++)
     //{
@@ -94,28 +92,28 @@ int main() {
     bool found = false;
     for(c_it=clients.begin(); c_it < clients.end(); c_it++)
     {
-      //std::cout << ( *c_it )->name << std::endl;
+      //cout << ( *c_it )->name << endl;
       for(cap_it=(*c_it)->access_points.begin(); cap_it < (*c_it)->access_points.end(); cap_it++)
       {
-        //std::cout << (*c_it)->min_strength << ": " << (*cap_it)->name << "(" <<
-        //  (*cap_it)->strength << ")" << std::endl;
+        //cout << (*c_it)->min_strength << ": " << (*cap_it)->name << "(" <<
+        //  (*cap_it)->strength << ")" << endl;
         if((*c_it)->min_strength <= (*cap_it)->strength)
         {
           for(ap_it=access_points.begin(); ap_it < access_points.end() && !found; ap_it++)
           {
             if((*ap_it)->name == (*cap_it)->name)
             {
-              std::vector<std::string>::iterator aprot_it;
+              vector<string>::iterator aprot_it;
               for(aprot_it=(*ap_it)->protocols.begin(); aprot_it < (*ap_it)->protocols.end() && !found; aprot_it++)
               {
-                std::vector<std::string>::iterator cprot_it;
+                vector<string>::iterator cprot_it;
                 for(cprot_it=(*c_it)->protocols.begin(); cprot_it < (*c_it)->protocols.end() && !found; cprot_it++)
                 {
                   if((*aprot_it) == (*cprot_it))
                   {
-                    std::cout << "client " << (*c_it)->name << " associates with AP " <<
+                    cout << "client " << (*c_it)->name << " associates with AP " <<
                       (*ap_it)->name << " using protocol " << (*aprot_it) << " at signal strength " <<
-                      (*cap_it)->strength << std::endl;
+                      (*cap_it)->strength << endl;
                     found = true;
                     break;
                   }
@@ -124,12 +122,12 @@ int main() {
             }
           }
         }
-        //std::cout << ( *ap_it )->name << std::endl;
+        //cout << ( *ap_it )->name << endl;
       }
       found = false;
     }
   //}
-  //else std::cout << "Unable to open file.";
+  //else cout << "Unable to open file.";
 
   return 0;
 }
